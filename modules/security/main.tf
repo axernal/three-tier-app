@@ -1,6 +1,4 @@
-############################################
-# ALB SECURITY GROUP
-############################################
+# ALB security group
 
 resource "aws_security_group" "alb_sg" {
   name        = "${var.environment}-alb-sg"
@@ -27,9 +25,7 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
-############################################
-# FRONTEND SECURITY GROUP
-############################################
+# Frontend security group
 
 resource "aws_security_group" "frontend_sg" {
   name        = "${var.environment}-frontend-sg"
@@ -64,9 +60,7 @@ resource "aws_security_group" "frontend_sg" {
   }
 }
 
-############################################
-# BASTION SECURITY GROUP
-############################################
+# Bastion security group
 
 resource "aws_security_group" "bastion_sg" {
   name        = "${var.environment}-bastion-sg"
@@ -93,9 +87,7 @@ resource "aws_security_group" "bastion_sg" {
   }
 }
 
-############################################
-# BACKEND SECURITY GROUP
-############################################
+# Backend security group
 
 resource "aws_security_group" "backend_sg" {
   name        = "${var.environment}-backend-sg"
@@ -132,9 +124,7 @@ resource "aws_security_group" "backend_sg" {
   }
 }
 
-############################################
-# RDS SECURITY GROUP
-############################################
+# RDS security group
 
 resource "aws_security_group" "rds_sg" {
   name        = "${var.environment}-rds-sg"

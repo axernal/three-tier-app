@@ -49,19 +49,19 @@ module "ec2" {
   instance_type = var.instance_type
   key_name      = var.key_name
 
-  # Subnets
+  # Subnet IDs
   app_public_subnet_az1_id = module.networking.app_public_subnet_az1_id
   app_public_subnet_az2_id = module.networking.app_public_subnet_az2_id
 
   backend_public_subnet_id  = module.networking.backend_public_subnet_id
   backend_private_subnet_id = module.networking.backend_private_subnet_id
 
-  # Security Groups
+  # Security group IDs
   frontend_sg_id = module.security.frontend_sg_id
   bastion_sg_id  = module.security.bastion_sg_id
   backend_sg_id  = module.security.backend_sg_id
 
-  # Database Details
+  # Database details (RDS)
   rds_endpoint = module.rds.rds_endpoint
 
   db_name     = var.db_name

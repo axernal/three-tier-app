@@ -1,10 +1,8 @@
 locals {
   backend_private_ip = aws_instance.backend.private_ip
 }
-############################################
-# FRONTEND SERVER 1
-############################################
 
+# Frontend EC2 instance (Availability Zone 1)
 resource "aws_instance" "frontend_1" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
@@ -145,10 +143,7 @@ EOF
   }
 }
 
-############################################
-# FRONTEND SERVER 2
-############################################
-
+# Frontend EC2 instance (Availability Zone 2)
 resource "aws_instance" "frontend_2" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
@@ -289,10 +284,7 @@ EOF
   }
 }
 
-############################################
-# BASTION HOST
-############################################
-
+# Bastion host EC2 instance (public subnet for secure admin access)
 resource "aws_instance" "bastion" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
@@ -305,10 +297,7 @@ resource "aws_instance" "bastion" {
   }
 }
 
-############################################
-# BACKEND SERVER
-############################################
-
+# Backend EC2 instance (application server connecting to RDS)
 resource "aws_instance" "backend" {
   ami                    = var.ami_id
   instance_type          = var.instance_type

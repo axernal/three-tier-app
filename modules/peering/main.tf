@@ -18,28 +18,28 @@ resource "aws_vpc_peering_connection" "backend_db" {
   }
 }
 
-# App -> Backend
+# Route: app VPC -> backend VPC
 resource "aws_route" "app_to_backend" {
   route_table_id            = var.app_route_table_id
   destination_cidr_block    = var.backend_vpc_cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.app_backend.id
 }
 
-# Backend -> App
+# Route: backend VPC -> app VPC (private)
 resource "aws_route" "backend_to_app" {
   route_table_id            = var.backend_private_route_table_id
   destination_cidr_block    = var.app_vpc_cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.app_backend.id
 }
 
-# Backend -> DB
+# Route: backend VPC -> DB VPC
 resource "aws_route" "backend_to_db" {
   route_table_id            = var.backend_private_route_table_id
   destination_cidr_block    = var.db_vpc_cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.backend_db.id
 }
 
-# DB -> Backend
+# Route: DB VPC -> backend VPC
 resource "aws_route" "db_to_backend" {
   route_table_id            = var.db_route_table_id
   destination_cidr_block    = var.backend_vpc_cidr

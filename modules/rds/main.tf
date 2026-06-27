@@ -1,5 +1,4 @@
-# DB SUBNET GROUP
-
+# DB subnet group
 
 resource "aws_db_subnet_group" "db_subnet_group" {
   name = "${var.environment}-db-subnet-group"
@@ -14,7 +13,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
   }
 }
 
-# MYSQL RDS
+# MySQL RDS instance
 
 resource "aws_db_instance" "mysql" {
   identifier = "${var.environment}-mysql-rds"

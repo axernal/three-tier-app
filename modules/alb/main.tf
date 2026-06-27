@@ -1,6 +1,4 @@
-############################################
-# APPLICATION LOAD BALANCER
-############################################
+# Application Load Balancer
 
 resource "aws_lb" "frontend_alb" {
   name               = "${var.environment}-frontend-alb"
@@ -21,9 +19,7 @@ resource "aws_lb" "frontend_alb" {
   }
 }
 
-############################################
-# TARGET GROUP
-############################################
+# Target group
 
 resource "aws_lb_target_group" "frontend_tg" {
   name     = "${var.environment}-frontend-tg"
@@ -47,9 +43,7 @@ resource "aws_lb_target_group" "frontend_tg" {
   }
 }
 
-############################################
-# TARGET ATTACHMENT - SERVER 1
-############################################
+# Target group attachment — server 1
 
 resource "aws_lb_target_group_attachment" "frontend_1" {
   target_group_arn = aws_lb_target_group.frontend_tg.arn
@@ -57,9 +51,7 @@ resource "aws_lb_target_group_attachment" "frontend_1" {
   port             = 80
 }
 
-############################################
-# TARGET ATTACHMENT - SERVER 2
-############################################
+# Target group attachment — server 2
 
 resource "aws_lb_target_group_attachment" "frontend_2" {
   target_group_arn = aws_lb_target_group.frontend_tg.arn
@@ -67,9 +59,7 @@ resource "aws_lb_target_group_attachment" "frontend_2" {
   port             = 80
 }
 
-############################################
-# LISTENER
-############################################
+# Listener
 
 resource "aws_lb_listener" "http_listener" {
   load_balancer_arn = aws_lb.frontend_alb.arn

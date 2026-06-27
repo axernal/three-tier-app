@@ -30,7 +30,7 @@ resource "aws_vpc" "db_vpc" {
 
 data "aws_availability_zones" "available" {}
 
-#App Public Subnet AZ1
+# App public subnet (AZ1)
 resource "aws_subnet" "app_public_az1" {
   vpc_id                  = aws_vpc.app_vpc.id
   cidr_block              = "10.10.1.0/24"
@@ -41,7 +41,7 @@ resource "aws_subnet" "app_public_az1" {
     Name = "${var.environment}-app-public-az1"
   }
 }
-#App Public Subnet AZ2
+# App public subnet (AZ2)
 resource "aws_subnet" "app_public_az2" {
   vpc_id                  = aws_vpc.app_vpc.id
   cidr_block              = "10.10.2.0/24"
@@ -53,7 +53,7 @@ resource "aws_subnet" "app_public_az2" {
     Name = "${var.environment}-app-public-az2"
   }
 }
-#Backend Public Subnet (Bastion)
+# Backend public subnet (bastion)
 resource "aws_subnet" "backend_public" {
   vpc_id                  = aws_vpc.backend_vpc.id
   cidr_block              = "10.20.1.0/24"
@@ -65,7 +65,7 @@ resource "aws_subnet" "backend_public" {
   }
 }
 
-#Backend Private Subnet
+# Backend private subnet
 resource "aws_subnet" "backend_private" {
   vpc_id            = aws_vpc.backend_vpc.id
   cidr_block        = "10.20.2.0/24"
@@ -76,7 +76,7 @@ resource "aws_subnet" "backend_private" {
   }
 }
 
-#DB Private Subnet AZ1
+# DB private subnet (AZ1)
 resource "aws_subnet" "db_private_az1" {
   vpc_id            = aws_vpc.db_vpc.id
   cidr_block        = "10.30.1.0/24"
@@ -87,7 +87,7 @@ resource "aws_subnet" "db_private_az1" {
   }
 }
 
-#DB Private Subnet AZ2
+# DB private subnet (AZ2)
 resource "aws_subnet" "db_private_az2" {
   vpc_id            = aws_vpc.db_vpc.id
   cidr_block        = "10.30.2.0/24"
@@ -98,7 +98,7 @@ resource "aws_subnet" "db_private_az2" {
   }
 }
 
-#App VPC Internet Gateway
+# App VPC internet gateway
 resource "aws_internet_gateway" "app_igw" {
   vpc_id = aws_vpc.app_vpc.id
 
@@ -107,7 +107,7 @@ resource "aws_internet_gateway" "app_igw" {
   }
 }
 
-#Backend VPC Internet Gateway
+# Backend VPC internet gateway
 resource "aws_internet_gateway" "backend_igw" {
   vpc_id = aws_vpc.backend_vpc.id
 
@@ -115,7 +115,7 @@ resource "aws_internet_gateway" "backend_igw" {
     Name = "${var.environment}-backend-igw"
   }
 }
-#App Public Route Table
+# App public route table
 resource "aws_route_table" "app_public_rt" {
   vpc_id = aws_vpc.app_vpc.id
 
@@ -129,7 +129,7 @@ resource "aws_route_table" "app_public_rt" {
   }
 }
 
-#Backend Public Route Table
+# Backend public route table
 resource "aws_route_table" "backend_public_rt" {
   vpc_id = aws_vpc.backend_vpc.id
 
@@ -143,7 +143,7 @@ resource "aws_route_table" "backend_public_rt" {
   }
 }
 
-#Backend Private Route Table
+# Backend private route table
 resource "aws_route_table" "backend_private_rt" {
   vpc_id = aws_vpc.backend_vpc.id
 
@@ -157,7 +157,7 @@ resource "aws_route_table" "backend_private_rt" {
   }
 }
 
-#DB private Route Table
+# DB private route table
 resource "aws_route_table" "db_private_rt" {
   vpc_id = aws_vpc.db_vpc.id
 
@@ -166,42 +166,42 @@ resource "aws_route_table" "db_private_rt" {
   }
 }
 
-#Route Table Associations AZ1
+# Route table associations (AZ1)
 resource "aws_route_table_association" "app_public_az1_assoc" {
   subnet_id      = aws_subnet.app_public_az1.id
   route_table_id = aws_route_table.app_public_rt.id
 }
 
-#Route Table Associations AZ2
+# Route table associations (AZ2)
 resource "aws_route_table_association" "app_public_az2_assoc" {
   subnet_id      = aws_subnet.app_public_az2.id
   route_table_id = aws_route_table.app_public_rt.id
 }
 
-#backend public
+# Backend public route table association
 resource "aws_route_table_association" "backend_public_assoc" {
   subnet_id      = aws_subnet.backend_public.id
   route_table_id = aws_route_table.backend_public_rt.id
 }
-#backend private
+# Backend private route table association
 resource "aws_route_table_association" "backend_private_assoc" {
   subnet_id      = aws_subnet.backend_private.id
   route_table_id = aws_route_table.backend_private_rt.id
 }
 
-#DB Az1
+# DB route table association (AZ1)
 resource "aws_route_table_association" "db_private_az1_assoc" {
   subnet_id      = aws_subnet.db_private_az1.id
   route_table_id = aws_route_table.db_private_rt.id
 }
 
-#DB Az2
+# DB route table association (AZ2)
 resource "aws_route_table_association" "db_private_az2_assoc" {
   subnet_id      = aws_subnet.db_private_az2.id
   route_table_id = aws_route_table.db_private_rt.id
 }
 
-#elastic IP for NAT Gateway
+# Elastic IP for NAT gateway
 resource "aws_eip" "nat_eip" {
   domain = "vpc"
 
@@ -209,7 +209,7 @@ resource "aws_eip" "nat_eip" {
     Name = "${var.environment}-nat-eip"
   }
 }
-#NAT Gateway
+# NAT gateway
 resource "aws_nat_gateway" "nat_gateway" {
   allocation_id = aws_eip.nat_eip.id
   subnet_id     = aws_subnet.backend_public.id
